@@ -29,6 +29,7 @@ describe "Adding todo items" do
     within("div.flash") do
       expect(page).to have_content("There was a problem adding that todo list item.")
     end
+    expect(page).to have_content("Content can't be blank")
   end
 
   it "displays an error with content < 2 characters long" do
@@ -39,6 +40,7 @@ describe "Adding todo items" do
     within("div.flash") do
       expect(page).to have_content("There was a problem adding that todo list item.")
     end
+    expect(page).to have_content("Content is too short")
   end
 
 end
