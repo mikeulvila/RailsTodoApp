@@ -30,14 +30,6 @@ describe UsersController do
   # UsersController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET index" do
-    it "assigns all users as @users" do
-      user = User.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:users).should eq([user])
-    end
-  end
-
   describe "GET show" do
     it "assigns the requested user as @user" do
       user = User.create! valid_attributes
