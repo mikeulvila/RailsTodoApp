@@ -18,6 +18,6 @@ describe "todo_lists/index" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "div.todo_list h2", :text => "Title".to_s, :count => 2
-    assert_select "div.todo_list h2", :text => "MyText".to_s, :count => 2
+    assert_select "div.todo_list p", :text => "MyText".to_s, :count => 2
   end
 end
