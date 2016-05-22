@@ -5,9 +5,7 @@ describe "Viewing todo items" do
 
   it "displays the title of the todo list" do
     visit_todo_list(todo_list)
-    within("h1") do
-      expect(page).to have_content(todo_list.title)
-    end
+    expect(page).to have_content(todo_list.title)
   end
 
   it "displays no items when a todo list is empty" do
