@@ -29,8 +29,11 @@ describe User do
   describe "#downcase_email" do
     it "makes the email attribute lower case" do
       user = User.new(valid_attributes.merge(email: "MIKE@TEAM.COM"))
-      user.downcase_email
-      expect(user.email).to eq("mike@team.com")
+      #user.downcase_email
+      #expect(user.email).to eq("mike@team.com")
+      expect{ user.downcase_email }.to change{ user.email }.
+        from("MIKE@TEAM.COM").
+        to("mike@team.com")
     end
 
     it "downcases an email before saving" do
