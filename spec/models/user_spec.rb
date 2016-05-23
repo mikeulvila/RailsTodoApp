@@ -23,6 +23,10 @@ describe User do
       expect(user).to validate_uniqueness_of(:email)
     end
 
+    it "requires a unique email (case insensitive)" do
+      user.email = "MIKE@MIKE.COM"
+      expect(user).to validate_uniqueness_of(:email)
+    end
 
   end
 
