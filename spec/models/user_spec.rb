@@ -30,6 +30,11 @@ describe User do
       expect(user).to validate_uniqueness_of(:email)
     end
 
+    it "requires the email to look like an email" do
+      user.email = "mike"
+      expect(user).to_not be_valid
+    end
+
   end
 
   describe "#downcase_email" do
