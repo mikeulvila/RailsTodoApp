@@ -54,6 +54,11 @@ describe UserSessionsController do
         post :create
         expect(response).to render_template('new')
       end
+
+      it "sets the flash error message" do
+        post :create
+        expect(flash[:error]).to eq("There was a problem logging in. Please check your email and password.")
+      end
     end
 
   end
