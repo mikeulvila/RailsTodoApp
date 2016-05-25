@@ -23,7 +23,13 @@ describe UsersController do
   # This should return the minimal set of attributes required to create a valid
   # User. As you add validations to User, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { { "first_name" => "MyString" } }
+  let(:valid_attributes) { {
+    "first_name" => "MyString",
+    "last_name" => "LastName",
+    "email" => "email@example.com",
+    "password" => "password1234",
+    "password_confirmation" => "password1234"
+    } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
