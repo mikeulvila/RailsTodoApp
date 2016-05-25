@@ -15,10 +15,23 @@ describe UserSessionsController do
   end
 
   describe "POST 'create'" do
-    it "redirects to the todo list path" do
-      post :create, email: "mike@mike.com", password: "password1234"
-      expect(response).to be_redirect
-      expect(response).to redirect_to(todo_lists_path)
+    context "with correct credentials" do
+      let!(:user) { User.create(first_name: "Mike", last_name: "Ulvila",
+                                email: "mike@mike.com", password: "password1234",
+                                password_confirmation: "password1234") }
+
+      it "redirects to the todo list path" do
+        post :create, email: "mike@mike.com", password: "password1234"
+        expect(response).to be_redirect
+        expect(response).to redirect_to(todo_lists_path)
+      end
+
+      it "authenticates the user" do
+        User.stub(:find_by).and_return(user)
+        expect(user).to receive(:authenticate)
+        post :create, email: "mike@mike.com", password: "password1234"
+      end
+
     end
   end
 
