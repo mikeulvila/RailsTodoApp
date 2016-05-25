@@ -75,6 +75,12 @@ describe UserSessionsController do
       it_behaves_like "denied login"
     end
 
+    context "with no email in existence" do
+      let(:email) { "none@found.com" }
+      let(:password) { "hello" }
+      it_behaves_like "denied login"
+    end
+
   end
 
 end
