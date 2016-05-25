@@ -26,6 +26,11 @@ describe UserSessionsController do
         expect(response).to redirect_to(todo_lists_path)
       end
 
+      it "finds the user" do
+        expect(User).to receive(:find_by).with({email: "mike@mike.com"}).and_return(user)
+        post :create, email: "mike@mike.com", password: "password1234"
+      end
+
       it "authenticates the user" do
         User.stub(:find_by).and_return(user)
         expect(user).to receive(:authenticate)
