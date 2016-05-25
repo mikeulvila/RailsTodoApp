@@ -37,6 +37,11 @@ describe UserSessionsController do
         post :create, email: "mike@mike.com", password: "password1234"
       end
 
+      it "sets the user_id in the session" do
+        post :create, email: "mike@mike.com", password: "password1234"
+        expect(session[:user_id]).to eq(user.id)
+      end
+
     end
   end
 
