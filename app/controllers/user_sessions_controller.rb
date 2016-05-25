@@ -3,5 +3,6 @@ class UserSessionsController < ApplicationController
   end
 
   def create
+    redirect_to todo_lists_path
   end
 end
