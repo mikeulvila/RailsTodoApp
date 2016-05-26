@@ -31,8 +31,9 @@ describe TodoListsController do
   let(:valid_session) { {} }
 
   before do
-    controller.stub(:current_user).and_return(build_stubbed(:user))
+    sign_in(build_stubbed(:user))
   end
+  
   describe "GET index" do
     context "logged in" do
       it "assigns all todo_lists as @todo_lists" do
