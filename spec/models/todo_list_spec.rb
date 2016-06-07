@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 describe TodoList do
-  it { should have_many(:todo_items) }
+
+  context "relationships" do
+    it { should have_many(:todo_items) }
+    it { should belong_to(:user) }
+  end
 
   describe "#has_complete_items?" do
     let(:todo_list) { TodoList.create(title: "Groceries", description: "Grocery list")}

@@ -1,4 +1,5 @@
 class TodoList < ActiveRecord::Base
+  belongs_to :user
   has_many :todo_items
 
   validates :title, presence: true
@@ -13,5 +14,5 @@ class TodoList < ActiveRecord::Base
   def has_incomplete_items?
     todo_items.incomplete.size > 0
   end
-  
+
 end

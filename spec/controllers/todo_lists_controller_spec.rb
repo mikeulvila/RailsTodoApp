@@ -29,41 +29,51 @@ describe TodoListsController do
   # in order to pass any filters (e.g. authentication) defined in
   # TodoListsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+  let!(:user) { create(:user) }
 
   before do
-    sign_in(build_stubbed(:user))
+    sign_in(user)
   end
-  
+
   describe "GET index" do
     context "logged in" do
       it "assigns all todo_lists as @todo_lists" do
         todo_list = TodoList.create! valid_attributes
         get :index, {}, valid_session
         assigns(:todo_lists).should eq([todo_list])
+        expect(assigns(:todo_lists).map(&:user)).to eq([user])
+      end
+
+      it "does not load other user's todo lists" do
+        other_todo_list = TodoList.create!(valid_attributes.merge(user_id: create(:user).id))
+        get :index, {}, valid_session
+        expect(assigns(:todo_lists)).to_not include(other_todo_list)
       end
     end
   end
 
   describe "GET show" do
-    it "assigns the requested todo_list as @todo_list" do
-      todo_list = TodoList.create! valid_attributes
+    it "assigns the requested todo_list as @todo_list for logged in user" do
+      todo_list = user_todo_lists.create! valid_attributes
       get :show, {:id => todo_list.to_param}, valid_session
       assigns(:todo_list).should eq(todo_list)
+      expect(assigns(:todo_list).user).to eq(user)
     end
   end
 
   describe "GET new" do
-    it "assigns a new todo_list as @todo_list" do
+    it "assigns a new todo_list as @todo_list for logged in user" do
       get :new, {}, valid_session
       assigns(:todo_list).should be_a_new(TodoList)
     end
   end
 
   describe "GET edit" do
-    it "assigns the requested todo_list as @todo_list" do
-      todo_list = TodoList.create! valid_attributes
+    it "assigns the requested todo_list as @todo_list for logged in user" do
+      todo_list = user_todo_lists.create! valid_attributes
       get :edit, {:id => todo_list.to_param}, valid_session
       assigns(:todo_list).should eq(todo_list)
+      expect(assigns(:todo_list).user).to eq(user)
     end
   end
 
@@ -84,6 +94,19 @@ describe TodoListsController do
       it "redirects to the created todo_list" do
         post :create, {:todo_list => valid_attributes}, valid_session
         response.should redirect_to(TodoList.last)
+      end
+
+      it "creates a todo list for the current user" do
+        post :create, {:todo_list => valid_attributes}, valid_session
+        todo_list = TodoList.last
+        expect(todo_list.user).to eq(user)
+      end
+
+      it "does not allow user to create todo list for other users" do
+        other_user = create(:user)
+        post :create, {:todo_list => valid_attributes.merge(user_id: other_user.id)}, valid_session
+        todo_list = TodoList.last
+        expect(todo_list.user).to eq(user)
       end
     end
 
