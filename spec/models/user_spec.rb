@@ -59,4 +59,11 @@ describe User do
       expect(user.email).to eq("mike@team.com")
     end
   end
+
+  describe "#generate password reset token!" do
+    let(:user) { create(:user) }
+    it "changes the password_reset_token attribute" do
+      expect{ user.generate_password_reset_token! }.to change{ user.password_reset_token }
+    end
+  end
 end
