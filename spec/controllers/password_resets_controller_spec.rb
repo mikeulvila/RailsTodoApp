@@ -8,4 +8,19 @@ describe PasswordResetsController do
     end
   end
 
+  describe "POST create" do
+    context "with a valid user and email" do
+      let(:user) {create(:user)}
+
+      it "finds the user" do
+        expect(User).to receive(:find_by).with(email: user.email)
+        post :create, email: user.email
+      end
+
+      it "generates a new password reset token" do
+
+      end
+    end
+  end
+
 end
