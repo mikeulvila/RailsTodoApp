@@ -25,6 +25,14 @@ describe PasswordResetsController do
         expect{ post :create, email: user.email }.to change(ActionMailer::Base.deliveries, :size)
       end
     end
+
+    context "with no user found" do
+      it "renders the new page" do
+        post :create, email: "none@found.com"
+        expect(response).to render_template("new")
+      end
+    end
+
   end
 
 end
