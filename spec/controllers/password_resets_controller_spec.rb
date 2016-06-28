@@ -31,6 +31,11 @@ describe PasswordResetsController do
         post :create, email: "none@found.com"
         expect(response).to render_template("new")
       end
+
+      it "sets the flash message" do
+        post :create, email: "none@found.com"
+        expect(flash[:notice]).to match(/not found/)
+      end
     end
 
   end

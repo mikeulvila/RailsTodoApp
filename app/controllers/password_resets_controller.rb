@@ -10,6 +10,7 @@ class PasswordResetsController < ApplicationController
       Notifier.password_reset(user).deliver
       redirect_to login_path
     else
+      flash.now[:notice] = "Email not found"
       render action: "new"
     end
   end
