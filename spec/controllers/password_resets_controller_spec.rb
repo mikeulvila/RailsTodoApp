@@ -45,7 +45,8 @@ describe PasswordResetsController do
   end
 
   describe "GET edit" do
-    context "with a valid email" do
+
+    context "with a valid password_reset_token" do
       let(:user) { create(:user) }
       before { user.generate_password_reset_token! }
 
@@ -58,6 +59,10 @@ describe PasswordResetsController do
         get :edit, id: user.password_reset_token
         expect(assigns(:user)).to eq(user)
       end
+    end
+
+    context "with no password_reset_token found" do
+      
     end
 
   end
