@@ -8,6 +8,7 @@ class PasswordResetsController < ApplicationController
     if user
       user.generate_password_reset_token!
       Notifier.password_reset(user).deliver
+      flash.now[:success] = "Password reset email sent! Please check your email."
       redirect_to login_path
     else
       flash.now[:notice] = "Email not found"

@@ -24,6 +24,11 @@ describe PasswordResetsController do
       it "sends a password reset email" do
         expect{ post :create, email: user.email }.to change(ActionMailer::Base.deliveries, :size)
       end
+
+      it "sets the flash success message" do
+        post :create, email: user.email
+        expect(flash[:success]).to match(/check your email/)
+      end
     end
 
     context "with no user found" do
