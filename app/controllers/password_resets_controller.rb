@@ -24,4 +24,12 @@ class PasswordResetsController < ApplicationController
     end
   end
 
+  def update
+    user = User.find_by(password_reset_token: params[:id])
+    if user
+    else
+      render action: "edit"
+    end
+  end
+
 end
