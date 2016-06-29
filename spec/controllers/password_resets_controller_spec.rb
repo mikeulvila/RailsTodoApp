@@ -62,9 +62,18 @@ describe PasswordResetsController do
     end
 
     context "with no password_reset_token found" do
-      
-    end
 
+    end
   end
+
+  describe "PATCH update" do
+    context "with no token found" do
+      it "renders the edit page" do
+        patch :update, id: "notfound", user: {password: "new123", password_confirmation: "new123"}
+        expect(response).to render_template("edit")
+      end
+    end
+  end
+
 
 end
